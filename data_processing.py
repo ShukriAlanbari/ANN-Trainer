@@ -7,7 +7,7 @@ from tensorflow.keras.activations import relu, sigmoid, softmax, tanh
 
 
 
-# Class to handle user input for model training.
+# Class to handle user input for model training
 class UserInput:
 
     def __init__ (self):

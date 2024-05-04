@@ -11,6 +11,10 @@ from model_support import *
 
 fitted_model = None
 
+"""
+Display the menu options.
+"""
+
 def show_menu():
     
     print("")
@@ -31,6 +35,10 @@ def show_menu():
 
 
 def main():
+    """
+    Main function to run the program.
+    """
+
     global fitted_model
     
     
@@ -49,6 +57,7 @@ def main():
             user_input_instance = UserInput()
             user_input_instance.run_all()
 
+            # instantiate MyANN class and run_all method
             my_ann = MyAnn(user_input_instance.data, user_input_instance.target_column,
                         user_input_instance.hidden_layer_sizes, user_input_instance.activation,
                         user_input_instance.loss, user_input_instance.optimizer, user_input_instance.batch_size,
@@ -74,7 +83,6 @@ def main():
                 if file_name.endswith('.h5'):
                     user_input_instance = UserInput()
                     user_input_instance.get_file_path()
-                    # user_input_instance.get_ml_type()
                     user_input_instance.get_target_column()
                     fitted_model= load_model(file_name)
                     break
