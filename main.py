@@ -53,7 +53,7 @@ def main():
                         user_input_instance.hidden_layer_sizes, user_input_instance.activation,
                         user_input_instance.loss, user_input_instance.optimizer, user_input_instance.batch_size,
                         user_input_instance.epochs, user_input_instance.monitor, user_input_instance.patience,
-                        user_input_instance.mode, user_input_instance.verbose, user_input_instance.multiprocessing )
+                        user_input_instance.mode, user_input_instance.verbose, user_input_instance.multiprocessing, user_input_instance.metrics )
             fitted_model = my_ann.train_model()[0]       
        
         elif choice == '2': # Save  Model

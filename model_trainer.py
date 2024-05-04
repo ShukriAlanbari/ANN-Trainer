@@ -10,7 +10,7 @@ class MyAnn:
 
     def __init__(self, data, target_column, hidden_layer_sizes,
                        activation, loss, optimizer, batch_size, epochs,
-                       monitor, patience, mode, verbose, multiprocessing ):
+                       monitor, patience, mode, verbose, multiprocessing, metrics ):
         
         self.data = data
         self.target_column = target_column
@@ -32,7 +32,7 @@ class MyAnn:
         self.scaled_X_train = None
         self.scaled_X_test = None
         self.fitted_model = None 
-
+        self.metrics = metrics
 
     def train_model(self):
         print("Training model with the following settings:")
@@ -86,7 +86,7 @@ class MyAnn:
         model.add(Dense(units=1, activation= self.activation))
 
         # Compile the model
-        model.compile(loss=self.loss, optimizer=self.optimizer,)
+        model.compile(loss=self.loss, optimizer=self.optimizer, metrics= self.metrics)
 
         early_stop = EarlyStopping(monitor=self.monitor,patience=self.patience,mode=self.mode)
         # model training 

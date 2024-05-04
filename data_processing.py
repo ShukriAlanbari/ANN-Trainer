@@ -26,6 +26,7 @@ class UserInput:
         self.mode = "auto"
         self.verbose = 1
         self.multiprocessing = False
+        self.metrics = None
 
     """Execute the sequence of methods to gather user input."""
     def run_all(self):
@@ -44,7 +45,7 @@ class UserInput:
         self.mode = self.get_mode()
         self.verbose = self.get_verbose()
         self.multiprocessing = self.get_multiprocessing()
-        
+        self.metrics = self.get_metrics()
     """Prompt the user for a valid file path and load CSV data."""   
     def get_file_path(self):
         # Continuously prompt the user until a valid file path is provided
@@ -332,4 +333,12 @@ class UserInput:
             except ValueError as e:
                 print(e)
 
-    
+    def get_metrics(self):
+        if self.ml_type == 'classifier':
+            metrics = ['accuracy']
+            return metrics
+        elif self.ml_type == 'regressor':
+            metrics = ['mse']
+            return metrics
+        else:
+            raise ValueError("Invalid ml_type. Supported types are 'classifier' and 'regressor'.")
