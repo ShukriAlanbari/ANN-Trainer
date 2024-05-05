@@ -10,7 +10,33 @@ from tensorflow.keras.activations import relu, sigmoid, softmax, tanh
 # Class to handle user input for model training
 class UserInput:
 
+    """
+    A class to handle user input for model training.
+
+    Attributes:
+        data: DataFrame or None, the loaded CSV data.
+        file_path: str or None, the file path provided by the user.
+        ml_type: str or None, the type of machine learning task ('regressor' or 'classifier').
+        target_column: str or None, the name of the target column.
+        hidden_layer_sizes: tuple of int or float, the sizes of hidden layers in the neural network.
+        activation: str, the activation function for hidden layers.
+        loss: str, the loss function for model training.
+        optimizer: str, the optimizer algorithm for model training.
+        batch_size: int, the batch size for training.
+        epochs: int, the number of epochs for training.
+        monitor: str, the metric to monitor during training.
+        patience: int, the patience value for early stopping.
+        mode: str, the mode for monitoring (auto/min/max).
+        verbose: int, the verbosity level during training.
+        multiprocessing: bool, indicating whether to use process-based threading.
+        metrics: list of str, the evaluation metrics for the model.
+    """
+
     def __init__ (self):
+        """
+        Initializes UserInput with default values for attributes.
+        """
+
         self.data = None
         self.file_path = None
         self.ml_type = None
@@ -111,31 +137,34 @@ class UserInput:
                     raise ValueError(f"Column '{target_column}' not found. Please choose a valid target column.\n")
             except ValueError as e:
                 print(e)  # Print the error message if an exception occurs
-        
+    
+    """Prompt the user for custom hidden layer sizes and validate the input"""    
     def get_hidden_layers(self):
         while True:
             try:
                 custom_hidden_layers = input("Do you want to choose custom hidden layer sizes? (Y:Yes /N:No) (Default: (100,): ")
-                if custom_hidden_layers.lower() == 'y':
+                if custom_hidden_layers.lower() == 'y': # Check if user wants custom hidden layer sizes
                     hidden_layers_input = input("Enter the hidden layer sizes separated by commas (e.g., 50,25,-0.25,12): ")
                     if not hidden_layers_input.strip():  # Check if input is empty
                         raise ValueError("Input cannot be empty. Please enter at least one hidden layer size.\n")
                     else:
+                        # Convert input string to tuple of floats
                         hidden_layer_sizes = tuple(map(float, hidden_layers_input.split(',')))
-                elif custom_hidden_layers.lower() == 'n':
+                elif custom_hidden_layers.lower() == 'n': # Check if user does not want custom hidden layer sizes
                     print(f"Choosing the default hidden layer sizes: {self.hidden_layer_sizes}\n")
                     hidden_layer_sizes = self.hidden_layer_sizes  # Use default value
                 else:
                     raise ValueError("Invalid input. Please enter (Y:Yes /N:No).\n")
 
                 # Validate if hidden layer sizes are provided correctly
-                if all(isinstance(size, (int, float)) for size in hidden_layer_sizes):
+                if all(isinstance(size, (int, float)) for size in hidden_layer_sizes): # Check if all elements in hidden_layer_sizes are integers or floats
                     return hidden_layer_sizes
                 else:
                     raise ValueError("Invalid input. Please provide valid hidden layer sizes separated by commas.\n")
             except ValueError as e:
                 print(e)
 
+    """ Prompt the user for a custom activation function and validate the input."""
     def get_activation(self):
         while True:
             try:
@@ -157,6 +186,7 @@ class UserInput:
             except ValueError as e:
                 print(e)
 
+    """Prompt the user for a custom loss function and validate the input."""
     def get_loss_function(self):
         while True:
             try:
@@ -176,6 +206,7 @@ class UserInput:
             except ValueError as e:
                 print(e)    
 
+    """Prompt the user for a custom optimizer and validate the input."""
     def get_optimizer(self):
         while True:
             try:
@@ -195,6 +226,7 @@ class UserInput:
             except ValueError as e:
                 print(e)
 
+    """Prompt the user for a custom batch size and validate the input."""
     def get_batch_size(self):
         while True:
             try:
@@ -217,6 +249,7 @@ class UserInput:
             except ValueError as e:
                 print(e)
 
+    """Prompt the user for a custom number of epochs and validate the input."""
     def get_epochs(self):
         while True:
             try:
@@ -239,6 +272,7 @@ class UserInput:
             except ValueError as e:
                 print(e)
     
+    """Prompt the user for a custom metric to monitor and validate the input."""
     def get_monitor(self):
         while True:
             try:
@@ -257,6 +291,7 @@ class UserInput:
             except ValueError as e:
                 print(e)
 
+    """Prompt the user for a custom patience value and validate the input."""
     def get_patience(self):
         while True:
             try:
@@ -279,6 +314,7 @@ class UserInput:
             except ValueError as e:
                 print(e)
 
+    """ Prompt the user for a custom mode and validate the input."""
     def get_mode(self):
         while True:
             try:
@@ -297,6 +333,7 @@ class UserInput:
             except ValueError as e:
                 print(e)
     
+    """ Prompt the user for a custom verbose and validate the input."""
     def get_verbose(self):
         while True:
             try:
@@ -319,6 +356,7 @@ class UserInput:
             except ValueError as e:
                 print(e)
     
+    """Prompt the user for choosing process-based threading and validate the input."""
     def get_multiprocessing(self):
         while True:
             try:
@@ -333,6 +371,7 @@ class UserInput:
             except ValueError as e:
                 print(e)
 
+    """Return the appropriate metrics based on the machine learning type."""
     def get_metrics(self):
         if self.ml_type == 'classifier':
             metrics = ['accuracy']
@@ -342,3 +381,4 @@ class UserInput:
             return metrics
         else:
             raise ValueError("Invalid ml_type. Supported types are 'classifier' and 'regressor'.")
+        

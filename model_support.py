@@ -6,6 +6,34 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 
+"""
+This module provides various utility functions for analyzing and evaluating trained neural network models.
+
+Functions:
+- model_loss(fitted_model): Print the loss metrics of the fitted model.
+- plot_model_loss(fitted_model): Plot the training and validation loss curves of the fitted model.
+- make_prediction(fitted_model, input_row_df): Make predictions using the fitted model.
+- save_model(fitted_model, file_name): Save the fitted model to a file.
+- load_model(file_name): Load a saved model from a file.
+- plot_model_accuracy(fitted_model): Plot the training and validation accuracy curves of the fitted model.
+- print_classification_report(fitted_model, y_test, X_test): Print the classification report based on model predictions.
+- plot_predictions_scatter(fitted_model, y_test, X_test): Plot the scatter plot of true values vs predicted values.
+- print_errors(fitted_model, y_test, scaled_X_test): Print the root mean squared error (RMSE) and mean absolute error (MAE).
+- plot_residual_error(fitted_model, y_test, scaled_X_test): Plot the residual errors of the model predictions.
+- get_classes_(data, target_column): Get the unique class labels from the target column of the dataset.
+- get_last_loss(fitted_model): Get the last loss value from the training history of the model.
+- get_features_(data): Get the list of feature column names from the dataset.
+- get_n_layers(fitted_model): Get the number of layers in the model.
+- get_n_outputs_(fitted_model): Get the number of output units in the last layer of the model.
+- get_out_activation_(fitted_model): Get the activation function of the output layer of the model.
+- get_attributes(fitted_model, data, target_column): Print various attributes of the model and dataset.
+
+All functions accept the fitted_model, which is an instance of the trained neural network model,
+along with other optional parameters such as data, target_column, y_test, X_test, and scaled_X_test.
+
+Note: Some functions may raise errors or return None values if certain information cannot be retrieved or if there are issues with the input data or model.
+
+"""
 
 def model_loss(fitted_model):
     history = fitted_model.history

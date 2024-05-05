@@ -3,10 +3,75 @@ warnings.filterwarnings("ignore")
 
 
 
+"""
+MyAnn - Customized Artificial Neural Network for Training and Prediction
 
+This class implements a customized Artificial Neural Network (ANN) for training and prediction tasks. 
+The ANN architecture and training settings can be customized through various parameters provided during 
+initialization.
+
+Parameters:
+    data (DataFrame): The input dataset for training the ANN.
+    target_column (str): The name of the target column in the dataset.
+    hidden_layer_sizes (tuple): Tuple containing the sizes of hidden layers in the ANN.
+    activation (str): The activation function to be used in the hidden layers.
+    loss (str): The loss function to be optimized during training.
+    optimizer (str): The optimizer algorithm to be used during training.
+    batch_size (int): The batch size for training the ANN.
+    epochs (int): The number of epochs (iterations over the entire dataset) for training.
+    monitor (str): The metric to monitor during training for early stopping.
+    patience (int): The number of epochs with no improvement after which training will be stopped.
+    mode (str): One of {'auto', 'min', 'max'}. In 'min' mode, training will stop when the quantity 
+                monitored has stopped decreasing; in 'max' mode it will stop when the quantity monitored 
+                has stopped increasing; in 'auto' mode, the direction is automatically inferred.
+    verbose (int): Verbosity mode. 0 = silent, 1 = progress bar, 2 = one line per epoch.
+    multiprocessing (bool): Whether to use process-based threading for parallelism.
+    metrics (list): List of metrics to evaluate the model during training.
+
+Methods:
+    - train_model(): Trains the ANN model with the provided settings and data.
+    
+Attributes:
+    - X_train: Feature variables of the training dataset.
+    - y_train: Target variable of the training dataset.
+    - X_test: Feature variables of the testing dataset.
+    - y_test: Target variable of the testing dataset.
+    - scaled_X_train: Scaled feature variables of the training dataset.
+    - scaled_X_test: Scaled feature variables of the testing dataset.
+    - fitted_model: Trained ANN model after training.
+
+Usage Example:
+    # Create an instance of MyAnn class
+    ann = MyAnn(data, 'target_column', (64, 32), 'relu', 'mse', 'adam', 32, 100, 'val_loss', 5, 'auto', 1, True, ['accuracy'])
+    
+    # Train the model
+    fitted_model, X_train, y_train, X_test, y_test, scaled_X_train, scaled_X_test = ann.train_model()
+"""
 
 
 class MyAnn:
+
+    """
+        Initialize the MyAnn class.
+
+        Args:
+            data (DataFrame): The input dataset for training the ANN.
+            target_column (str): The name of the target column in the dataset.
+            hidden_layer_sizes (tuple): Tuple containing the sizes of hidden layers in the ANN.
+            activation (str): The activation function to be used in the hidden layers.
+            loss (str): The loss function to be optimized during training.
+            optimizer (str): The optimizer algorithm to be used during training.
+            batch_size (int): The batch size for training the ANN.
+            epochs (int): The number of epochs (iterations over the entire dataset) for training.
+            monitor (str): The metric to monitor during training for early stopping.
+            patience (int): The number of epochs with no improvement after which training will be stopped.
+            mode (str): One of {'auto', 'min', 'max'}. In 'min' mode, training will stop when the quantity 
+                        monitored has stopped decreasing; in 'max' mode it will stop when the quantity monitored 
+                        has stopped increasing; in 'auto' mode, the direction is automatically inferred.
+            verbose (int): Verbosity mode. 0 = silent, 1 = progress bar, 2 = one line per epoch.
+            multiprocessing (bool): Whether to use process-based threading for parallelism.
+            metrics (list): List of metrics to evaluate the model during training.
+        """
 
     def __init__(self, data, target_column, hidden_layer_sizes,
                        activation, loss, optimizer, batch_size, epochs,
@@ -35,6 +100,19 @@ class MyAnn:
         self.metrics = metrics
 
     def train_model(self):
+        """
+        Train the ANN model with the provided settings and data.
+
+        Returns:
+            tensorflow.keras.models.Sequential: The trained ANN model.
+            numpy.ndarray: Feature variables of the training dataset.
+            numpy.ndarray: Target variable of the training dataset.
+            numpy.ndarray: Feature variables of the testing dataset.
+            numpy.ndarray: Target variable of the testing dataset.
+            numpy.ndarray: Scaled feature variables of the training dataset.
+            numpy.ndarray: Scaled feature variables of the testing dataset.
+        """
+
         print("Training model with the following settings:")
         print(f"Target Column: {self.target_column}")
         print(f"Hidden Layer Sizes: {self.hidden_layer_sizes}")
